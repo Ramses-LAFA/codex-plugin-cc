@@ -79,8 +79,7 @@ test("continue is not exposed as a user-facing command", () => {
     "result.md",
     "review.md",
     "setup.md",
-    "status.md",
-    "transfer.md"
+    "status.md"
   ]);
 });
 
@@ -164,21 +163,17 @@ test("rescue command absorbs continue semantics", () => {
   assert.match(readme, /uses the same review target selection as `\/codex:review`/i);
   assert.match(readme, /--base main challenge whether this was the right caching and retry design/);
   assert.match(readme, /### `\/codex:rescue`/);
-  assert.match(readme, /### `\/codex:transfer`/);
+  assert.doesNotMatch(readme, /### `\/codex:transfer`/);
   assert.match(readme, /### `\/codex:status`/);
   assert.match(readme, /### `\/codex:result`/);
   assert.match(readme, /### `\/codex:cancel`/);
 });
 
-test("transfer, result, and cancel commands are exposed as deterministic runtime entrypoints", () => {
-  const transfer = read("commands/transfer.md");
+test("result and cancel commands are exposed as deterministic runtime entrypoints", () => {
   const result = read("commands/result.md");
   const cancel = read("commands/cancel.md");
   const resultHandling = read("skills/codex-result-handling/SKILL.md");
 
-  assert.match(transfer, /disable-model-invocation:\s*true/);
-  assert.match(transfer, /codex-companion\.mjs" transfer "\$ARGUMENTS"/);
-  assert.match(transfer, /codex resume <session-id>/);
   assert.match(result, /disable-model-invocation:\s*true/);
   assert.match(result, /codex-companion\.mjs" result "\$ARGUMENTS"/);
   assert.match(cancel, /disable-model-invocation:\s*true/);
